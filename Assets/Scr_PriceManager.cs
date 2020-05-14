@@ -16,7 +16,7 @@ public class Scr_PriceManager : MonoBehaviour
     };
 
     private Patterns myPattern;
-    private int[] prices = new int[13];
+    private readonly int[] prices = new int[13];
 
     private void Start()
     {
@@ -46,12 +46,41 @@ public class Scr_PriceManager : MonoBehaviour
         prices[num] = price;
         PlayerPrefs.SetInt("input" + num.ToString(), price);
         Debug.Log(num + " : " + prices[num]);
+        UpdateChart();
         PredictPrices();
+    }
+
+    private void UpdateChart()
+    {
+        for (int i = 0; i < 13; i++)
+        {
+            if (prices[i] != 0)
+            {
+                Scr_ChartManager.chartPoints[i * 2].transform.position = new Vector3(i * 0.45f, prices[i] * 0.01f);
+                if (i > 0)
+                {
+                    Scr_ChartManager.chartPoints[(i * 2) - 1].transform.position = new Vector3(i * 0.45f, prices[i] * 0.01f);
+                }
+            }
+        }
+
+        for (int i = 0; i < 24; i++)
+        {
+            if (i > 0)
+            {
+                Scr_ChartManager.lines[i].SetPosition(0, Scr_ChartManager.chartPoints[i + 1].transform.position);
+                Scr_ChartManager.lines[i].SetPosition(1, Scr_ChartManager.chartPoints[i - 1].transform.position);
+            }
+            else
+            {
+                Scr_ChartManager.lines[i].SetPosition(0, Scr_ChartManager.chartPoints[i + 1].transform.position);
+                Scr_ChartManager.lines[i].SetPosition(1, Scr_ChartManager.chartPoints[i].transform.position);
+            }
+        }
     }
 
     private void PredictPrices()
     {
-
     }
 
     public void ResetPrices()
