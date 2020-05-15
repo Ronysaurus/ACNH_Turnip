@@ -6,7 +6,7 @@ public class Scr_PriceManager : MonoBehaviour
     public Dropdown pattern_DropDown;
     public InputField[] input;
 
-    private enum Patterns
+    public enum Patterns
     {
         Unknown,
         SmlSpike,
@@ -20,6 +20,8 @@ public class Scr_PriceManager : MonoBehaviour
 
     private void Start()
     {
+        Scr_ChartManager.Initiate();
+
         for (int i = 0; i <= 12; i++)
         {
             if (PlayerPrefs.HasKey("input" + i.ToString()))
@@ -43,7 +45,7 @@ public class Scr_PriceManager : MonoBehaviour
     public void UpdatePrice(int num)
     {
         int price = int.Parse(input[num].text);
-        prices[num] = price;
+        prices[num] = price > 0 ? price : 0;
         PlayerPrefs.SetInt("input" + num.ToString(), price);
         Debug.Log(num + " : " + prices[num]);
         UpdateChart();
@@ -81,6 +83,7 @@ public class Scr_PriceManager : MonoBehaviour
 
     private void PredictPrices()
     {
+        Scr_CalculatePrice.Calculate(myPattern, prices[0], prices);
     }
 
     public void ResetPrices()

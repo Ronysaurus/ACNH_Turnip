@@ -5,7 +5,7 @@ public class Scr_ChartManager : MonoBehaviour
     public static GameObject[] chartPoints = new GameObject[25];
     public static LineRenderer[] lines;
 
-    private void Start()
+    public static void Initiate()
     {
         GameObject parent = GameObject.Find("ChartObjects");
         lines = new LineRenderer[24];
