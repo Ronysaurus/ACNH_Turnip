@@ -281,20 +281,20 @@ public class Scr_CalculatePrice : MonoBehaviour
             return this.intceil(rate * basePrice / RATE_MULTIPLIER);
         }
 
-       private float generate_individual_random_price(float [] given_prices, List<float> predicted_prices,int start, float length, float rate_min, float rate_max)
+        private float generate_individual_random_price(float[] given_prices, List<float> predicted_prices, int start, float length, float rate_min, float rate_max)
         {
             rate_min *= RATE_MULTIPLIER;
             rate_max *= RATE_MULTIPLIER;
 
             float buy_price = given_prices[0];
-            float [] rate_range = new float[] { rate_min, rate_max };
+            float[] rate_range = new float[] { rate_min, rate_max };
             float prob = 1;
 
             for (int i = start; i < start + length; i++)
             {
                 float min_pred = this.get_price(rate_min, buy_price);
                 float max_pred = this.get_price(rate_max, buy_price);
-                if (given_prices[i] != null)
+                if (!double.IsNaN(given_prices[i]))
                 {
                     if (given_prices[i] < min_pred - this.fudge_factor || given_prices[i] > max_pred + this.fudge_factor)
                     {
@@ -303,7 +303,7 @@ public class Scr_CalculatePrice : MonoBehaviour
                     }
                     // TODO: How to deal with probability when there's fudge factor?
                     // Clamp the value to be in range now so the probability won't be totally biased to fudged values.
-                    float[] real_rate_range = this.rate_range_from_given_and_base( clamp(given_prices[i], min_pred, max_pred), buy_price);
+                    float[] real_rate_range = this.rate_range_from_given_and_base(clamp(given_prices[i], min_pred, max_pred), buy_price);
                     prob *= range_intersect_length(rate_range, real_rate_range) /
                       range_length(rate_range);
                     min_pred = given_prices[i];
@@ -312,12 +312,11 @@ public class Scr_CalculatePrice : MonoBehaviour
 
                 predicted_prices.Add({ min: min_pred, max: max_pred,});
         }
+
     return prob;
   }
 
-}
-
-public int[] Calculate(Scr_PriceManager.Patterns _pattern, int _basePrice, int[] _sellPrice)
+    public int[] Calculate(Scr_PriceManager.Patterns _pattern, int _basePrice, int[] _sellPrice)
     {
         return new int[1];
     }
