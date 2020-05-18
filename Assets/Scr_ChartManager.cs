@@ -27,6 +27,8 @@ public class Scr_ChartManager : MonoBehaviour
             chartPoints[i].transform.parent = parent.transform;
             chartPoints[i].transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             chartPoints[i].transform.position = new Vector3(200, 200, 200);
+            chartPoints[i].AddComponent<TextMesh>();
+            chartPoints[i].AddComponent<MeshRenderer>();
         }
     }
 }

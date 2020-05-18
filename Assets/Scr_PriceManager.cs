@@ -8,11 +8,11 @@ public class Scr_PriceManager : MonoBehaviour
 
     public enum Patterns
     {
-        Unknown = 0,
-        SmlSpike = 4,
-        HighSpike = 2,
-        Fluc  = 1,
-        Dec = 3,
+        Unknown,
+        SmlSpike,
+        HighSpike,
+        Fluc,
+        Dec,
     };
 
     private Patterns myPattern;
