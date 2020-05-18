@@ -3791,13 +3791,13 @@ MonoBehaviour:
     m_Options:
     - m_Text: Unknow
       m_Image: {fileID: 0}
-    - m_Text: Small Spike
-      m_Image: {fileID: 0}
-    - m_Text: Big Spike
-      m_Image: {fileID: 0}
     - m_Text: Fluctuating
       m_Image: {fileID: 0}
+    - m_Text: High Spike
+      m_Image: {fileID: 0}
     - m_Text: Decreasing
+      m_Image: {fileID: 0}
+    - m_Text: Low Spike
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
