@@ -6,6 +6,7 @@ using UnityEngine;
 public class Scr_CalculatePrice : MonoBehaviour
 {
     private const int RATE_MULTIPLIER = 10000;
+    private static List<float[]> predicted_prices = new List<float[]>();
 
     private static float range_length(float[] range)
     {
@@ -281,7 +282,7 @@ public class Scr_CalculatePrice : MonoBehaviour
             return this.intceil(rate * basePrice / RATE_MULTIPLIER);
         }
 
-        private float generate_individual_random_price(float[] given_prices, List<float> predicted_prices, int start, float length, float rate_min, float rate_max)
+        private float generate_individual_random_price(float[] given_prices, int start, float length, float rate_min, float rate_max)
         {
             rate_min *= RATE_MULTIPLIER;
             rate_max *= RATE_MULTIPLIER;
@@ -310,14 +311,15 @@ public class Scr_CalculatePrice : MonoBehaviour
                     max_pred = given_prices[i];
                 }
 
-                predicted_prices.Add({ min: min_pred, max: max_pred,});
+                predicted_prices.Add(new float[] { min_pred, max_pred });
+            }
+
+            return prob;
         }
 
-    return prob;
-  }
-
-    public int[] Calculate(Scr_PriceManager.Patterns _pattern, int _basePrice, int[] _sellPrice)
-    {
-        return new int[1];
+        public int[] Calculate(Scr_PriceManager.Patterns _pattern, int _basePrice, int[] _sellPrice)
+        {
+            return new int[1];
+        }
     }
 }
